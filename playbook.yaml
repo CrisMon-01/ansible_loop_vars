@@ -3,7 +3,17 @@
   roles:
     - basic
 
+- hosts: due
+  roles:
+    - due
+
+- hosts: tre
+  roles:
+    - tre
+
 - hosts: uno
   roles:
     - snapmaster
+    - uno
+    - loadbalancer
   become: yes

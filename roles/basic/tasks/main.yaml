@@ -5,6 +5,15 @@
   become: true
   notify: restart service apache
 
+- name: add hosts name
+  lineinfile: 
+    path: /etc/hosts
+    line: "{{ item }} host{{index}}"
+  become: true
+  loop: "{{ groups['all'] }}"
+  loop_control:
+    index_var: index
+
 - name: print all group and hosts
   shell: "wall {{ item }}"
   loop: "{{ groups['all'] }}"

@@ -1,0 +1,35 @@
+---
+- name: stop apache
+  service: 
+    name: apache2
+    state: stopped
+  become: yes
+
+- name: remove old nginx
+  package:
+    name: nginx-common
+    state: absent
+  ignore_errors: yes
+
+- name: clear nginx old files
+  shell: "sudo rm -rf /etc/nginx"
+  become: true
+  ignore_errors: yes
+
+- name: install nginx
+  package: 
+    name: nginx-full
+  become: yes
+
+- name: Configure Nginx
+  copy:
+    src: nginx.conf 
+    dest:  /etc/nginx/nginx.conf
+  become: yes
+  notify: restart Nginx
+
+- name: stop nginx
+  service:
+    name: nginx
+    state: stopped
+    enabled: yes
