@@ -1,0 +1,21 @@
+- name: install snapd
+  package:
+    name: snapd
+    state: present
+  become: true
+
+- name: Install snapS
+  snap:
+    name: " {{ item.name }} "
+    state: "{{ item.state }}"
+  loop:
+    - { name: 'postman', state: 'present' }
+    - { name: 'docker', state: 'present' }
+    - { name: 'lxd', state: 'present' }
+    - { name: 'mosquitto', state: 'present' }
+
+- name: install Microk8s snap
+  snap:
+    name: microk8s
+    classic: yes
+  notify: remove microk8s

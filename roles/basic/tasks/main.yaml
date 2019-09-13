@@ -1,0 +1,10 @@
+- name: install apache2 with generic package manager
+  package:
+    name: apache2
+    state: present
+  become: true
+  notify: restart service apache
+
+- name: print all group and hosts
+  shell: "wall {{ item }}"
+  loop: "{{ groups['all'] }}"
